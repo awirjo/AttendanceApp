@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -72,8 +73,8 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                 fragmentTransaction.commit();
                 break;
             case R.id.addStudent:
-                Intent intent = new Intent(DashboardActivity.this, AddStudentActivity.class);
-                startActivity(intent);
+                Intent intent1 = new Intent(DashboardActivity.this, AddStudentActivity.class);
+                startActivity(intent1);
                 break;
             case R.id.viewStudent:
                 fragmentManager = getSupportFragmentManager();
@@ -87,11 +88,16 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                 break;
             case R.id.share:
                 Intent share = new Intent(Intent.ACTION_SEND);
-                share.setType("image/jpeg");
-                share.putExtra(Intent.EXTRA_STREAM, Uri.parse("file:///sdcard/path-to-your-image.jpg"));
-                startActivity(Intent.createChooser(share, "Share Image"));
+                share.setAction(Intent.ACTION_SEND);
+                Intent.createChooser(share, "Share via");
+                startActivity(share);
                 break;
             case R.id.logout:
+                Intent intent3 =new Intent(DashboardActivity.this,LoginActivity.class);
+                intent3.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent3);
+                Toast.makeText(getApplicationContext(), "Logging Out", Toast.LENGTH_SHORT).show();
+                break;
         }
         drawerLayout.closeDrawer(GravityCompat.START);// when selecting an item, closes the drawer
         return true;
